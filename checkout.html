@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — PawHaven</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <header class="checkout-header">
+        <a href="index.html" class="checkout-logo" aria-label="Back to PawHaven">
+            <span class="logo-icon">🐾</span>
+            <span class="logo-text">Paw<span class="logo-accent">Haven</span></span>
+        </a>
+        <div class="checkout-steps" id="checkout-steps">
+            <div class="step active" data-step="1">
+                <span class="step-num">1</span>
+                <span class="step-label">Cart Review</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2">
+                <span class="step-num">2</span>
+                <span class="step-label">Payment</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="3">
+                <span class="step-num">3</span>
+                <span class="step-label">Confirmation</span>
+            </div>
+        </div>
+        <a href="index.html" class="checkout-back" aria-label="Continue shopping">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Continue Shopping
+        </a>
+    </header>
+
+    <!-- Step 1: Cart Review -->
+    <main class="checkout-main">
+        <section class="checkout-section" id="step-cart" aria-label="Review your cart">
+            <div class="checkout-grid">
+                <div class="checkout-left">
+                    <h1 class="checkout-title">Review Your Order 🛒</h1>
+                    <div class="order-items" id="order-items">
+                        <!-- filled by JS -->
+                    </div>
+                    <div class="order-empty" id="order-empty" style="display:none;">
+                        <span class="empty-icon">🐾</span>
+                        <p>Your cart is empty!</p>
+                        <a href="index.html" class="btn btn-sage">Go Shopping</a>
+                    </div>
+                </div>
+                <aside class="checkout-right">
+                    <div class="order-summary-card">
+                        <h2 class="summary-title">Order Summary</h2>
+                        <div class="summary-items" id="summary-items-count">0 items</div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="summary-subtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span id="summary-shipping" class="shipping-value">₹49</span>
+                        </div>
+                        <div class="summary-row free-ship" id="summary-free-ship" style="display:none;">
+                            <span>🎉 Free shipping!</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span>Total</span>
+                            <span id="summary-total">₹0</span>
+                        </div>
+                        <button class="btn btn-amber btn-full" id="go-to-payment-btn">
+                            Continue to Payment
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                        <p class="summary-note">🔒 Your information is secure</p>
+                    </div>
+                    <div class="promo-card">
+                        <h3 class="promo-title">Have a coupon?</h3>
+                        <div class="promo-input-group">
+                            <input type="text" class="promo-input" placeholder="Enter code" aria-label="Promo code">
+                            <button class="promo-btn">Apply</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Step 2: Payment -->
+        <section class="checkout-section" id="step-payment" style="display:none;" aria-label="Payment method selection">
+            <div class="checkout-grid">
+                <div class="checkout-left">
+                    <h1 class="checkout-title">Choose Payment Method 💳</h1>
+
+                    <!-- Shipping Address -->
+                    <div class="payment-block">
+                        <h3 class="block-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            Delivery Address
+                        </h3>
+                        <div class="address-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="addr-name">Full Name</label>
+                                    <input type="text" id="addr-name" class="form-input" placeholder="Your name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="addr-phone">Phone</label>
+                                    <input type="tel" id="addr-phone" class="form-input" placeholder="+91 98765 43210"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="addr-line">Address</label>
+                                <input type="text" id="addr-line" class="form-input"
+                                    placeholder="House no, Street, Landmark" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="addr-city">City</label>
+                                    <input type="text" id="addr-city" class="form-input" placeholder="City" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="addr-pin">PIN Code</label>
+                                    <input type="text" id="addr-pin" class="form-input" placeholder="560034" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="payment-block">
+                        <h3 class="block-title">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Select Payment Method
+                        </h3>
+                        <div class="payment-methods" id="payment-methods">
+                            <!-- UPI Methods -->
+                            <div class="payment-group-label">UPI Payments</div>
+                            <label class="payment-option" data-method="gpay">
+                                <input type="radio" name="payment" value="gpay">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon gpay-icon">
+                                        <svg viewBox="0 0 48 48" width="32" height="32">
+                                            <path fill="#4285F4"
+                                                d="M24.48 12.01c2.98 0 5.12 1.29 6.3 2.37l4.6-4.49C32.18 7.09 28.68 5.5 24.48 5.5c-5.91 0-11.01 3.39-13.49 8.33l5.34 4.14c1.27-3.8 4.82-5.96 8.15-5.96z" />
+                                            <path fill="#34A853"
+                                                d="M10.99 24.5c0-1.16.2-2.28.55-3.33l-5.34-4.14A18.44 18.44 0 004 24.5c0 2.73.61 5.32 1.7 7.64l5.47-4.24a11.3 11.3 0 01-.18-3.4z" />
+                                            <path fill="#FBBC05"
+                                                d="M24.48 37c4.06 0 7.47-1.34 9.96-3.64l-4.87-3.78c-1.35.91-3.08 1.42-5.09 1.42-3.93 0-7.27-2.65-8.46-6.22l-5.47 4.24C13.15 34.15 18.39 37 24.48 37z" />
+                                            <path fill="#EA4335"
+                                                d="M42.48 24.5c0-1.34-.19-2.64-.51-3.88H24.48v7.34h10.09a8.62 8.62 0 01-3.74 5.66l4.87 3.78c4.48-4.14 7.28-10.24 6.78-12.9z" />
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Google Pay</span>
+                                        <span class="payment-desc">Pay via UPI with GPay</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+                            <label class="payment-option" data-method="phonepe">
+                                <input type="radio" name="payment" value="phonepe">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon phonepe-icon">
+                                        <svg viewBox="0 0 40 40" width="32" height="32">
+                                            <rect width="40" height="40" rx="8" fill="#5F259F" />
+                                            <path d="M12 10h4.5l6 10V10H27v20h-4.5l-6-10v10H12V10z" fill="white" />
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">PhonePe</span>
+                                        <span class="payment-desc">Pay via UPI with PhonePe</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+
+                            <!-- Cards -->
+                            <div class="payment-group-label">Credit / Debit Cards</div>
+                            <label class="payment-option" data-method="visa">
+                                <input type="radio" name="payment" value="visa">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon visa-icon">
+                                        <svg viewBox="0 0 48 32" width="40" height="28">
+                                            <rect width="48" height="32" rx="4" fill="#1A1F71" /><text x="24" y="20"
+                                                font-family="Arial,sans-serif" font-weight="bold" font-size="14"
+                                                fill="white" text-anchor="middle">VISA</text>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Visa Card</span>
+                                        <span class="payment-desc">Credit or Debit Card</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+                            <label class="payment-option" data-method="mastercard">
+                                <input type="radio" name="payment" value="mastercard">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon mc-icon">
+                                        <svg viewBox="0 0 48 32" width="40" height="28">
+                                            <rect width="48" height="32" rx="4" fill="#252525" />
+                                            <circle cx="19" cy="16" r="9" fill="#EB001B" />
+                                            <circle cx="29" cy="16" r="9" fill="#F79E1B" />
+                                            <path d="M24 9.06a9 9 0 000 13.88 9 9 0 000-13.88z" fill="#FF5F00" />
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Mastercard</span>
+                                        <span class="payment-desc">Credit or Debit Card</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+
+                            <!-- Card Details (shown when Visa/MC selected) -->
+                            <div class="card-details-form" id="card-details-form" style="display:none;">
+                                <div class="form-group">
+                                    <label class="form-label" for="card-number">Card Number</label>
+                                    <input type="text" id="card-number" class="form-input"
+                                        placeholder="1234 5678 9012 3456" maxlength="19">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label" for="card-expiry">Expiry</label>
+                                        <input type="text" id="card-expiry" class="form-input" placeholder="MM/YY"
+                                            maxlength="5">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="card-cvv">CVV</label>
+                                        <input type="password" id="card-cvv" class="form-input" placeholder="•••"
+                                            maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Online Wallets -->
+                            <div class="payment-group-label">Online Wallets</div>
+                            <label class="payment-option" data-method="paypal">
+                                <input type="radio" name="payment" value="paypal">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon paypal-icon">
+                                        <svg viewBox="0 0 48 32" width="40" height="28">
+                                            <rect width="48" height="32" rx="4" fill="#003087" /><text x="24" y="20"
+                                                font-family="Arial,sans-serif" font-weight="bold" font-size="11"
+                                                fill="white" text-anchor="middle">PayPal</text>
+                                        </svg>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">PayPal</span>
+                                        <span class="payment-desc">Secure international payments</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+
+                            <!-- Gift Card -->
+                            <div class="payment-group-label">Gift Card</div>
+                            <label class="payment-option" data-method="giftcard">
+                                <input type="radio" name="payment" value="giftcard">
+                                <div class="payment-option-content">
+                                    <div class="payment-icon gift-icon">
+                                        <span style="font-size:1.6rem;">🎁</span>
+                                    </div>
+                                    <div class="payment-details">
+                                        <span class="payment-name">Gift Card</span>
+                                        <span class="payment-desc">Redeem a PawHaven gift card</span>
+                                    </div>
+                                    <div class="payment-check"></div>
+                                </div>
+                            </label>
+
+                            <!-- Gift Card Input -->
+                            <div class="card-details-form" id="gift-card-form" style="display:none;">
+                                <div class="form-group">
+                                    <label class="form-label" for="gift-code">Gift Card Code</label>
+                                    <input type="text" id="gift-code" class="form-input" placeholder="XXXX-XXXX-XXXX"
+                                        maxlength="14">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <aside class="checkout-right">
+                    <div class="order-summary-card">
+                        <h2 class="summary-title">Order Summary</h2>
+                        <div class="summary-items" id="payment-items-count">0 items</div>
+                        <div class="summary-divider"></div>
+                        <div class="mini-order-list" id="mini-order-list"></div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row summary-total">
+                            <span>Total</span>
+                            <span id="payment-total">₹0</span>
+                        </div>
+                        <button class="btn btn-amber btn-full pay-now-btn" id="pay-now-btn" disabled>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                <line x1="1" y1="10" x2="23" y2="10"></line>
+                            </svg>
+                            Pay Now
+                        </button>
+                        <p class="summary-note">🔒 256-bit SSL Secure Payment</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <!-- Step 3: Thank You / Confirmation -->
+        <section class="checkout-section" id="step-confirm" style="display:none;" aria-label="Order confirmation">
+            <div class="confirm-wrapper">
+                <!-- Cat Animation -->
+                <div class="cat-scene" id="cat-scene">
+                    <div class="confetti-container" id="confetti-container"></div>
+                    <div class="cat-body">
+                        <div class="cat-ears">
+                            <div class="ear ear-left">
+                                <div class="ear-inner"></div>
+                            </div>
+                            <div class="ear ear-right">
+                                <div class="ear-inner"></div>
+                            </div>
+                        </div>
+                        <div class="cat-face">
+                            <div class="cat-eyes">
+                                <div class="eye eye-left">
+                                    <div class="pupil"></div>
+                                    <div class="eye-shine"></div>
+                                </div>
+                                <div class="eye eye-right">
+                                    <div class="pupil"></div>
+                                    <div class="eye-shine"></div>
+                                </div>
+                            </div>
+                            <div class="cat-nose"></div>
+                            <div class="cat-mouth">
+                                <div class="mouth-line mouth-left"></div>
+                                <div class="mouth-line mouth-right"></div>
+                            </div>
+                            <div class="cat-whiskers whiskers-left">
+                                <div class="whisker"></div>
+                                <div class="whisker"></div>
+                                <div class="whisker"></div>
+                            </div>
+                            <div class="cat-whiskers whiskers-right">
+                                <div class="whisker"></div>
+                                <div class="whisker"></div>
+                                <div class="whisker"></div>
+                            </div>
+                            <div class="cat-blush blush-left"></div>
+                            <div class="cat-blush blush-right"></div>
+                        </div>
+                        <div class="cat-paws">
+                            <div class="paw paw-left">
+                                <div class="paw-pad"></div>
+                            </div>
+                            <div class="paw paw-right">
+                                <div class="paw-pad"></div>
+                            </div>
+                        </div>
+                        <div class="cat-tail"></div>
+                    </div>
+                    <div class="cat-speech">
+                        <p class="speech-text">Thank You! 💕</p>
+                        <p class="speech-sub">Your order is on its way!</p>
+                    </div>
+                </div>
+
+                <div class="confirm-details">
+                    <div class="confirm-badge">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h1 class="confirm-title">Payment Successful! 🎉</h1>
+                    <p class="confirm-subtitle">Your furry friend's goodies are being packed with love</p>
+
+                    <div class="confirm-info-card">
+                        <div class="confirm-info-row">
+                            <span class="info-label">Order ID</span>
+                            <span class="info-value" id="confirm-order-id">PH-ORD-000000</span>
+                        </div>
+                        <div class="confirm-info-row">
+                            <span class="info-label">Payment Method</span>
+                            <span class="info-value" id="confirm-payment-method">—</span>
+                        </div>
+                        <div class="confirm-info-row">
+                            <span class="info-label">Amount Paid</span>
+                            <span class="info-value info-amount" id="confirm-amount">₹0</span>
+                        </div>
+                        <div class="confirm-info-row">
+                            <span class="info-label">Delivery</span>
+                            <span class="info-value">3-5 business days 🚚</span>
+                        </div>
+                    </div>
+
+                    <div class="confirm-actions">
+                        <a href="index.html" class="btn btn-sage">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                            Continue Shopping
+                        </a>
+                        <button class="btn btn-amber" id="track-order-btn">
+                            📦 Track Order
+                        </button>
+                    </div>
+
+                    <p class="confirm-pawpoints">🐾 You earned <strong id="confirm-points">0</strong> PawPoints with
+                        this order!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" id="processing-overlay">
+        <div class="processing-content">
+            <div class="processing-spinner">
+                <div class="spinner-paw">🐾</div>
+            </div>
+            <p class="processing-text">Processing your payment...</p>
+            <p class="processing-sub">Please don't close this page</p>
+        </div>
+    </div>
+
+    <script src="checkout.js"></script>
+</body>
+
+</html>
